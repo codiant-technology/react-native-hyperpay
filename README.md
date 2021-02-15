@@ -9,11 +9,11 @@
   
 ### Installation
 
-`$ yarn add react-native-hyperpay`
+`$ yarn add react-native-hyper-pays`
 
 Or
 
-`$ npm install react-native-hyperpay`
+`$ npm install react-native-hyper-pays`
 
 ### Android
 
