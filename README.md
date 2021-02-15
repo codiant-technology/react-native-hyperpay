@@ -105,4 +105,118 @@ generateCheckoutID = async () => {
     }
     } 
     
-    ```
+ ```
+
+### Add following listen inside componentDidMount() after payment screen redirect to browser this listner use to listen payment callback
+
+  ```
+  componentDidMount = () => {
+    Linking.getInitialURL().then(async (url) => {
+      let deepLinkUrl = await AsyncStorage.getItem('deepLinkUrl');
+      if (url && url !== deepLinkUrl) {
+        let regex = /[?&]([^=#]+)=([^&#]*)/g,
+          params = {},
+          match;
+        while ((match = regex.exec(url))) {
+          params[match[1]] = match[2];
+          console.log(match[1], match[2]);
+        }
+
+        const {id, resourcePath} = params;
+        console.log('getInitialURL', resourcePath, url, id);
+        if (id) {
+          await AsyncStorage.setItem('deepLinkUrl', url);
+          this.getPaymentStatus(resourcePath);
+        }
+      } else {
+      }
+    });
+    let subscription = DeviceEventEmitter.addListener(
+      'transactionStatus',
+      this.onSessionConnect,
+    );
+
+    Linking.addEventListener('url', (e) => {
+      const {url} = e;
+      if (url) {
+        let regex = /[?&]([^=#]+)=([^&#]*)/g,
+          params = {},
+          match;
+        while ((match = regex.exec(url))) {
+          params[match[1]] = match[2];
+          console.log(match[1], match[2]);
+        }
+
+        const {id, resourcePath} = params;
+        this.getPaymentStatus(id);
+      } else {
+        console.log('outside get initialUrl method');
+      }
+    });
+  }; 
+  
+  ```
+  
+  
+  ### After received callback We will call getPaymentStatus api to get payment status. We can call this api to our end or implement at SERVER end.
+  
+   ```
+   getPaymentStatus = async (resourcePath) => {
+    try {
+      this.setState({
+        checkoutID: '',
+        paymentBrand: '',
+        cardNumber: '',
+        holderName: '',
+        expiryMonth: '',
+        expiryYear: '',
+        selected_paymentType: 0,
+        loading: true,
+      });
+
+      var myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+      myHeaders.append(
+        'Authorization',
+        'Bearer {Use live token which get from hyper console}',
+      );
+
+      var urlencoded = new URLSearchParams();
+      urlencoded.append('entityId', {get from hyper pay console});
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
+      };
+
+      await AsyncStorage.getItem('CHECKOUT_ID').then(async (value) => {
+        let id = JSON.parse(value);
+
+        await fetch(
+          'https://test.oppwa.com/v1/checkouts/' +
+            id +
+            '/payment?entityId=' +
+            entityId,
+          requestOptions,
+        )
+          .then((response) => response.text())
+          .then(async (response) => {
+            console.log('Payment Status ====>' + JSON.stringify(response));
+            let responseJson = await response;
+            let result = JSON.parse(responseJson);
+            if (result && result.result && result.result.code) {
+              if (result.result.code == '000.100.110') {
+                Alert.alert('Hyper Pay', 'Thanks for your payment');
+              }
+            }
+          })
+          .catch((error) => console.log('error', error));
+      });
+    } catch (e) {
+      console.log('error', e.toString());
+    }
+  }; 
+  
+  ```
+  
