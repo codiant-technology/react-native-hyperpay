@@ -27,10 +27,11 @@ First of all you need a Hyper Pay account to generate live entityId and Authoriz
 First we will generate checkout ID using REST API. Also we can generate Checkout ID from server end and get using API or you can generate at our end using call (HyperPay)REST API.
 
 
-```  generateCheckoutID = async () => {
-    this.setState({loading: true});
+```  
+generateCheckoutID = async () => {
+    
     let params = {
-      entityId: entityId,
+      entityId: {Live Entity Id},
       amount: '1',
       currency: 'SAR',
       paymentType: 'DB',
@@ -47,16 +48,12 @@ First we will generate checkout ID using REST API. Also we can generate Checkout
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:
-          'Bearer OGFjN2E0Y2E3NTMyODA3ZjAxNzUzYjFlZGM1NzBjOTB8R05RUTg3d1JrYQ==',
+          'Bearer {Live Bearer Token}',
       },
       body: formBody,
     });
     let data_json = await data.json();
-    console.log('Response From API==>' + JSON.stringify(data_json));
     if (data.status == 200) {
       await this.setState({loading: false, checkoutID: data_json.id});
-      await AsyncStorage.setItem('CHECKOUT_ID', JSON.stringify(data_json.id));
-    } else {
-      this.setState({loading: false});
-    }
-  };```
+    } 
+    };```
