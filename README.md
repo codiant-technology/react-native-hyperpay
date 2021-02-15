@@ -127,7 +127,7 @@ generateCheckoutID = async () => {
     
  ```
 
-## Add following listen inside componentDidMount() after payment screen redirect to browser this listner use to listen payment callback
+## Add following listen inside componentDidMount() after payment screen redirect to browser this listener use to listen to payment callback
 
   ```
   componentDidMount = () => {
@@ -178,7 +178,7 @@ generateCheckoutID = async () => {
   ```
   
   
-  ## After received callback We will call getPaymentStatus api to get payment status. We can call this api to our end or implement at SERVER end.
+  ## After received callback We will call getPaymentStatus api to get payment status. We can call this api at our end or implement at SERVER end.
   
    ```
    getPaymentStatus = async (resourcePath) => {
