@@ -5,7 +5,7 @@
   
 ## React Native Hyper Pay (Only for Android)
   
-  This library designed to provided hyper pay payment integration to react native using native bridging. 
+  This library designed to provided hyper pay payment integration to react-native using native bridging.
   
 ### Installation
 
