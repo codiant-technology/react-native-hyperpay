@@ -104,4 +104,5 @@ generateCheckoutID = async () => {
       console.log('error', e);
     }
     } 
+    
     ```
