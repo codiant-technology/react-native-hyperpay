@@ -61,7 +61,8 @@ generateCheckoutID = async () => {
 ## Now you can call this method on checkout button
 
 
-```  onCheckOut = async () => {
+```  
+   onCheckOut = async () => {
        try {
      
       await this.generateCheckoutID();
@@ -102,4 +103,5 @@ generateCheckoutID = async () => {
     } catch (e) {
       console.log('error', e);
     }
-    } ```
+    } 
+    ```
