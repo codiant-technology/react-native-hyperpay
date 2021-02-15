@@ -15,6 +15,23 @@ Or
 
 `$ npm install react-native-hyperpay`
 
+### Android
+
+There are some extra steps need to do in android for deep linking
+
+ ``` 
+          <intent-filter android:label="@string/app_name">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data
+                  android:host="result"
+                  android:scheme="hyperpay" />
+          </intent-filter>
+          
+  ```
+
+
 ## Usage
 
 ### Setup
@@ -107,7 +124,7 @@ generateCheckoutID = async () => {
     
  ```
 
-### Add following listen inside componentDidMount() after payment screen redirect to browser this listner use to listen payment callback
+## Add following listen inside componentDidMount() after payment screen redirect to browser this listner use to listen payment callback
 
   ```
   componentDidMount = () => {
@@ -158,7 +175,7 @@ generateCheckoutID = async () => {
   ```
   
   
-  ### After received callback We will call getPaymentStatus api to get payment status. We can call this api to our end or implement at SERVER end.
+  ## After received callback We will call getPaymentStatus api to get payment status. We can call this api to our end or implement at SERVER end.
   
    ```
    getPaymentStatus = async (resourcePath) => {
