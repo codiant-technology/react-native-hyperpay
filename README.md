@@ -3,9 +3,9 @@
 <img  width="600" height="300" src="https://github.com/codianttechnology/react-native-hyperpay/blob/main/react-native-hyperpay.png">
   </p>
   
-## React Native Hyper Pay
+## React Native Hyper Pay (Only for Android)
   
-  This library designed to provided hyper pay payment integration to react native using native bridging.
+  This library designed to provided hyper pay payment integration to react native using native bridging. 
   
 ### Installation
 
@@ -38,6 +38,9 @@ There are some extra steps need to do in android for deep linking
 
 First of all you need a Hyper Pay account to generate live entityId and Authorization bearer token. Using dummy entityId and Authorization token it is not working (https://www.hyperpay.com/)
 
+For API server set up please check following link
+
+https://wordpresshyperpay.docs.oppwa.com/tutorials/mobile-sdk/integration/server
 
 ### Generate Checkout Id
 
