@@ -26,7 +26,6 @@ First of all you need a Hyper Pay account to generate live entityId and Authoriz
 
 First we will generate checkout ID using REST API. Also we can generate Checkout ID from server end and get using API or you can generate at our end using call (HyperPay)REST API.
 
-
 ```  
 generateCheckoutID = async () => {
     
@@ -56,4 +55,50 @@ generateCheckoutID = async () => {
     if (data.status == 200) {
       await this.setState({loading: false, checkoutID: data_json.id});
     } 
-    };```
+    }; ```
+    
+## Now you can call this method on checkout button
+
+
+```  onCheckOut = async () => {
+       try {
+     
+      await this.generateCheckoutID();
+      
+      const paymentParams = {
+        checkoutID: {Get From API},
+        paymentBrand: 'VISA',
+        cardNumber: 4200000000000000,
+        holderName: 'Codiant Technology',
+        expiryMonth: '12',
+        expiryYear: '2025',
+        cvv: '123',
+      };
+
+      HyperPay.transactionPayment(paymentParams)
+        .then((transactionResult) => {
+          if (transactionResult) {
+            if (!transactionResult.redirectURL)
+              return this.setState({loading: false}, () => {
+                Alert.alert('Hyper Pay', 'The card data is incorrect');
+              });
+            else {
+              if (transactionResult.status === 'pending') {
+                Linking.openURL(transactionResult.redirectURL)
+                  .then(() => {
+                    this.setState({loading: false});
+                  })
+                  .catch((err) => {
+                    console.log('paymentParams2', err);
+                  });
+              }
+            }
+          }
+        })
+        .catch((err) => {
+          console.log('error', err);
+        });
+    } catch (e) {
+      console.log('error', e);
+    }
+    } ```
